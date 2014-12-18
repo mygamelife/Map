@@ -42,7 +42,7 @@ void test_addLinkedList_should_add_created_list_into_LinkedList(void) {
   TEST_ASSERT_NULL(head->next);
   char *result = (char*)head->data;
   TEST_ASSERT_EQUAL_STRING("YOYO", result);
-  
+
   destroyAllLinkedLists(head);
 }
 
@@ -65,23 +65,23 @@ void test_addLinkedList_should_add_two_created_list_into_LinkedList(void) {
   char *name1 = "IM";
   char *name2 = "JUST";
   char *name3 = "LIST";
-  
+
   LinkedList *head = NULL;
   LinkedList *list1 = linkListNew(name1);
   LinkedList *list2 = linkListNew(name2);
   LinkedList *list3 = linkListNew(name3);
 
-  addLinkedList(&head, list1);  
+  addLinkedList(&head, list1);
   TEST_ASSERT_NOT_NULL(head);
   TEST_ASSERT_NULL(head->next);
   char *result1 = (char*)head->data;
   TEST_ASSERT_EQUAL_STRING("IM", result1);
-  
+
   addLinkedList(&head, list2);
   TEST_ASSERT_NOT_NULL(head->next);
   char *result2 = (char*)head->next->data;
   TEST_ASSERT_EQUAL_STRING("JUST", result2);
-  
+
   addLinkedList(&head, list3);
   TEST_ASSERT_NOT_NULL(head->next->next);
   TEST_ASSERT_NULL(head->next->next->next);
@@ -110,7 +110,7 @@ void test_findLinkedList_given_target_fool_should_should_return_LinkedList_conta
   char *data2 = "JUST";
   char *data3 = "fool";
   LinkedList *result;
-  
+
   /* Add list into LinkedList */
   LinkedList *head = NULL;
   LinkedList *list1 = linkListNew(data1);
@@ -126,7 +126,7 @@ void test_findLinkedList_given_target_fool_should_should_return_LinkedList_conta
   char *resultData = (char*)result->data;
   TEST_ASSERT_EQUAL_STRING(data3, resultData);
   TEST_ASSERT_NULL(result->next);
-  
+
   destroyAllLinkedLists(head);
 }
 
@@ -138,7 +138,7 @@ void test_findLinkedList_given_target_food_should_should_return_LinkedList_conta
   char *data5 = "so";
   char *data6 = "cool";
   LinkedList *result;
-  
+
   /* Add list into LinkedList */
   LinkedList *head = NULL;
   LinkedList *list1 = linkListNew(data1);
@@ -160,6 +160,88 @@ void test_findLinkedList_given_target_food_should_should_return_LinkedList_conta
   char *resultData = (char*)result->data;
   TEST_ASSERT_EQUAL_STRING(data4, resultData);
   TEST_ASSERT_NOT_NULL(result->next);
-  
+
+  destroyAllLinkedLists(head);
+}
+
+/** test removeLinkedList()
+ ** result  :
+ *
+ *           ----------        ----------        ----------
+ *  head->  |  list1  | ----> |  list2  | ----> |  list3  | -> NULL
+ *          ----------        ----------        ----------
+ *
+ *                      found
+ *           ----------  list  ----------        ----------
+ *  head->  |  list1  | ----> |  list2  | ----> |  list3  | -> NULL
+ *          ----------        ----------        ----------
+ *
+ *  After removed list2
+ *                      
+ *           ----------        ----------
+ *  head->  |  list1  | ----> |  list3  | -> NULL
+ *          ----------        ----------
+ **/
+void test_removeLinkedList_given_list1_list2_list3_should_remove_list2(void) {
+  char *data1 = "Made";
+  char *data2 = "by";
+  char *data3 = "fuguang";
+  LinkedList *result;
+  LinkedList *head = NULL;
+
+  /* Add list into LinkedList */
+  LinkedList *list1 = linkListNew(data1);
+  LinkedList *list2 = linkListNew(data2);
+  LinkedList *list3 = linkListNew(data3);
+  addLinkedList(&head, list1);
+  addLinkedList(&head, list2);
+  addLinkedList(&head, list3);
+
+  removeLinkedList(&head, list2);
+  TEST_ASSERT_NOT_NULL(head);
+  TEST_ASSERT_EQUAL_PTR(list3, head->next);
+  char *resultData = (char*)head->next->data;
+  TEST_ASSERT_EQUAL_STRING("fuguang", resultData);
+  TEST_ASSERT_NULL(head->next->next);
+
+  destroyAllLinkedLists(head);
+}
+
+void test_removeLinkedList_given_multiples_lists_should_remove_list4(void) {
+  char *data1 = "Happy";
+  char *data2 = "merry";
+  char *data3 = "Xmas";
+  char *data4 = "And";
+  char *data5 = "New";
+  char *data6 = "Year!";
+  LinkedList *result;
+  LinkedList *head = NULL;
+
+  /* Add list into LinkedList */
+  LinkedList *list1 = linkListNew(data1);
+  LinkedList *list2 = linkListNew(data2);
+  LinkedList *list3 = linkListNew(data3);
+  LinkedList *list4 = linkListNew(data4);
+  LinkedList *list5 = linkListNew(data5);
+  LinkedList *list6 = linkListNew(data6);
+  addLinkedList(&head, list1);
+  addLinkedList(&head, list2);
+  addLinkedList(&head, list3);
+  addLinkedList(&head, list4);
+  addLinkedList(&head, list5);
+  addLinkedList(&head, list6);
+
+  removeLinkedList(&head, list4);
+  TEST_ASSERT_NOT_NULL(head);
+  char *resultData = (char*)head->data;
+  TEST_ASSERT_EQUAL_STRING("Happy", resultData);
+  TEST_ASSERT_EQUAL_PTR(list2, head->next);
+  TEST_ASSERT_EQUAL_PTR(list3, head->next->next);
+  TEST_ASSERT_EQUAL_PTR(list5, head->next->next->next);
+  char *resultData1 = (char*)head->next->next->next->data;
+  TEST_ASSERT_EQUAL_STRING("New", resultData1);
+  TEST_ASSERT_EQUAL_PTR(list6, head->next->next->next->next);
+  TEST_ASSERT_EQUAL_PTR(NULL, head->next->next->next->next->next);
+
   destroyAllLinkedLists(head);
 }

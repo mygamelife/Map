@@ -42,17 +42,17 @@ void destroyAllLinkedLists(LinkedList *firstList)  {
  **/
 void addLinkedList(LinkedList **listPtr, LinkedList *newList) {
   LinkedList *head = *listPtr, *tail;
-  
+
   if(head == NULL)  {
     *listPtr  = newList;
     return;
   }
-  
+
   else  {
-    tail = head;  
+    tail = head;
     while(tail->next != NULL) {
       tail = tail->next;
-    } 
+    }
     tail->next = newList;
   }
 }
@@ -68,13 +68,13 @@ void addLinkedList(LinkedList **listPtr, LinkedList *newList) {
 int compare(void *dataInCollection, void *data) {
   char *dataInList = (char*)dataInCollection;
   char *target = (char*)data;
-  
+
   assert(dataInList != NULL);
   assert(target != NULL);
-  
+
   if(dataInList == target)
     return 1;
-  
+
   return 0;
 }
 
@@ -84,21 +84,48 @@ int compare(void *dataInCollection, void *data) {
  *          *data is a void type data act as a reference target
  *          int(*compare) is a function pointer used to compare target and dataInCollection
  *  output  :
- *           
+ *           return LinkedList if target is found
+ *           return NULL if target is not found
  **/
 LinkedList *findLinkedList(LinkedList **listPtr, void *data, int(*compare)(void *dataInCollection, void *data)) {
   LinkedList *head = *listPtr, *tail;
-  
+
   if(head == NULL)  {
     return NULL;
   }
-  
+
   assert(head->next != NULL);
-  
+
   tail = head;
   while(tail->data) {
     if(compare(tail->data, data))
-      return tail;     
+      return tail;
     tail = tail->next;
   };
+}
+
+/** findLinkedList(LinkedList **listPtr, void *data, int(*compare)(void *dataInCollection, void *data))
+ *  input :
+ *          **listPtr is the pointer pointing to head pointer address
+ *          *listToRemove is the list that need to be remove
+ *  output  :
+ *            remove the listToRemove into LinkedList
+ **/
+void removeLinkedList(LinkedList **listPtr, LinkedList *listToRemove) {
+  LinkedList *head = *listPtr, *tempPtr;
+
+  if(head == NULL)
+    return;
+
+  else  {
+    while(head->next) {
+      if(head->next->data == listToRemove->data)  {
+        tempPtr = head->next;
+        head->next = head->next->next;
+        free(tempPtr);
+        return;
+      }
+      head = head->next;
+    }
+  }
 }
