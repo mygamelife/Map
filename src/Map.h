@@ -15,5 +15,4 @@ Map *destroyMap(Map *map);
 void addMap(Map *map, void *data, int (*hash)(void *data));
 void *findMap(Map *map, void *data, int (*hash)(void *data));
 void *delMap(Map *map, void *data, int (*hash)(void *data));
-
 #endif // Map_H
