@@ -2,6 +2,7 @@
 #define Map_H
 
 #include "LinkedList.h"
+#include "Student.h"
 
 typedef struct Map Map;
 

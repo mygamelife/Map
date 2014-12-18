@@ -1,6 +1,8 @@
 #ifndef LinkedList_H
 #define LinkedList_H
 
+#include "Student.h"
+
 typedef struct LinkedList LinkedList;
 
 struct LinkedList {

@@ -44,7 +44,12 @@ void addLinkedList(LinkedList **listPtr, LinkedList *newList) {
   LinkedList *head = *listPtr, *tail;
 
   if(head == NULL)  {
-    *listPtr  = newList;
+    assert(*listPtr == NULL);
+    assert(newList != NULL);
+    // Student *student = (Student*)newList->data;
+    // printf("student->data %s\n", student->name);
+    // printf("student->age %d\n", student->age);
+    *listPtr = newList;
     return;
   }
 
@@ -72,10 +77,7 @@ int compare(void *dataInCollection, void *data) {
   assert(dataInList != NULL);
   assert(target != NULL);
 
-  if(dataInList == target)
-    return 1;
-
-  return 0;
+  return !strcmp(dataInList, target);
 }
 
 /** findLinkedList(LinkedList **listPtr, void *data, int(*compare)(void *dataInCollection, void *data))
