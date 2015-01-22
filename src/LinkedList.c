@@ -26,11 +26,11 @@ LinkedList *linkListNew(void *data) {
  *            free all malloc memory in LinkedList
  **/
 void destroyAllLinkedLists(LinkedList *firstList)  {
-
-  if(firstList->next != NULL)
-    destroyAllLinkedLists(firstList->next);
-
-  free(firstList);
+  if(firstList != NULL) {
+    if(firstList->next != NULL)
+      destroyAllLinkedLists(firstList->next);
+    free(firstList);
+  }
 }
 
 /** addLinkedList add newList into LinkedList
